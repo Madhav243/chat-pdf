@@ -7,10 +7,30 @@ import Skeleton from 'react-loading-skeleton';
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { format } from 'date-fns';
+import { useState } from "react";
 
 const Dashboard = () => {
 
+    const [currentlyDeletingFile , setCurrentlyDeletingFile] = useState<string | null>(null)
+
+    const utils = trpc.useUtils();
+
     const { data: files, isLoading } = trpc.getUserFiles.useQuery();
+
+    const { mutate: deleteFile} = trpc.deleteFiles.useMutation({
+        onSuccess : () => {
+            utils.getUserFiles.invalidate() // to recall api
+        },
+        onMutate : ({id}) => {
+            setCurrentlyDeletingFile(id);
+        },
+        onSettled : ()=>{
+            setCurrentlyDeletingFile(null)
+        },
+        onError : () => {
+
+        }
+    });
 
     return (
         <>
@@ -64,17 +84,17 @@ const Dashboard = () => {
                                         </div>
 
                                         <Button
-                                            // onClick={() =>
-                                            //     deleteFile({ id: file.id })
-                                            // }
+                                            onClick={() =>
+                                                deleteFile({ id: file.id })
+                                            }
                                             size='sm'
                                             className='w-full'
                                             variant='destructive'>
-                                            {/* {currentlyDeletingFile === file.id ? (
+                                            {currentlyDeletingFile === file.id ? (
                                                 <Loader2 className='h-4 w-4 animate-spin' />
-                                            ) : ( */}
+                                            ) : (
                                                 <Trash className='h-4 w-4' />
-                                            {/* )} */}
+                                             )} 
                                         </Button>
                                     </div>
                                 </li>
