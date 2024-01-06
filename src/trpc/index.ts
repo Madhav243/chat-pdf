@@ -166,7 +166,7 @@ export const appRouter = router({
     fileId: z.string()
   }))
     .query(async ({ input, ctx }) => {
-      const file = db.file.findFirst({
+      const file = await db.file.findFirst({
         where: {
           id: input.fileId,
           userId: ctx.userId,
