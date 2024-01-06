@@ -20,8 +20,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from './ui/dropdown-menu'
-import SimpleBar from 'simplebar-react'
-import PdfFullscreen from './PdfFullscreen'
+import SimpleBar from 'simplebar-react';
+import { PdfFullscreen } from './PdfFullScreen';
 
 
 
