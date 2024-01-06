@@ -15,7 +15,7 @@ interface PdfFullscreenProps {
     fileUrl: string
 }
 
-const PdfFullscreen = ({ fileUrl }: PdfFullscreenProps) => {
+export const PdfFullscreen = ({ fileUrl }: PdfFullscreenProps) => {
     const [isOpen, setIsOpen] = useState(false)
     const [numPages, setNumPages] = useState<number>()
 
@@ -79,4 +79,4 @@ const PdfFullscreen = ({ fileUrl }: PdfFullscreenProps) => {
     )
 }
 
-export default PdfFullscreen
+// export default PdfFullscreen
